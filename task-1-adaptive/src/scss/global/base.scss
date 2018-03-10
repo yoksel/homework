@@ -1,0 +1,75 @@
+BODY {
+  min-width: 300px;
+  margin: 0;
+  background: #FFF;
+  font:  14px/1.4 "YS Text", Arial, sans-serif;
+  color: #000;
+
+  @media (min-width: 1200px) {
+    font-size: 15px;
+  }
+
+  @media (min-width: 1500px) {
+    font-size: 16px;
+  }
+
+  @media (min-width: 1700px) {
+    font-size: 17px;
+  }
+}
+
+IMG {
+  max-width: 100%;
+  height: auto;
+}
+
+.svg-lib {
+  display: none;
+}
+
+.visuallyhidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  border: 0;
+  padding: 0;
+  white-space: nowrap;
+  clip-path: inset(100%);
+  clip: rect(0 0 0 0);
+  overflow: hidden;
+}
+
+/* Layout
+------------------------------ */
+.page-wrapper {
+  margin: 0 auto;
+  padding: 0 15px;
+  box-sizing: border-box;
+
+  @media (min-width: $bp-three-cols) {
+    max-width: 585px;
+    padding: 0;
+  }
+
+  @media (min-width: $bp-tablet) {
+    padding: 0;
+    max-width: 704px;
+  }
+
+  @media (min-width: 1200px) {
+    max-width: 1000px;
+  }
+
+  @media (min-width: 1500px) {
+    max-width: 1135px;
+  }
+
+  @media (min-width: 1700px) {
+    max-width: 1500px;
+  }
+
+  @media (min-width: 1900px) {
+    max-width: 1575px;
+  }
+}

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Дзен-лента</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex">
+    <link rel="stylesheet" type="text/css" href="../assets/css/styles.css">
+
+    <style>
+      HTML {
+        background: url() 50% -73px no-repeat;
+        background-image: url(../preview/page-1-zen-30.png);
+        background-size: 1024px auto;
+      }
+    </style>
+
+    <link href="../preview/styles.css" rel="stylesheet">
+    <script src="../preview/script.js"></script>
+  </head>
+<body class="page">
+
+
+  <div class="svg-lib">
+    <svg>
+      <symbol id="dots" viewBox="0 0 14 4" xmlns="http://www.w3.org/2000/svg"><g fill="currentColor"><circle cx="2" cy="2" r="2"/><circle cx="7" cy="2" r="2"/><circle cx="12" cy="2" r="2"/></g></symbol>
+
+      <symbol id="heart" viewBox="0 0 18 16" xmlns="http://www.w3.org/2000/svg"><path d="M9 16C3 11.43 0 7.597 0 4.5 0 2.015 2.239 0 5 0c1.636 0 3.088.707 4 1.8C9.912.707 11.364 0 13 0c2.761 0 5 2.015 5 4.5 0 2.96-3 6.793-9 11.5z" fill="currentColor" fill-rule="evenodd"/></symbol>
+    </svg>
+  </div>
+
+  <div class="page-wrapper">
+    <header class="page-header">
+      <h1 class="visuallyhidden">Дзен-лента</h1>
+      <img class="page-header__logo"
+          src="../assets/img/zen_logo.png"alt="Логотип Яндекс Дзен"
+          srcset="../assets/img/zen_logo.png 1x,
+                  ../assets/img/zen_logo@2x.png 2x">
+    </header>
+
+    <main class="page-main">
+      <div class="posts">
+
+      </div>
+    </main>
+  </div>
+
+  <template id="card">
+    <article class="post
+      post--size-{{ size }}
+      {{# image }} post--has-image {{/ image }}
+      ">
+      <h2 class="post__title" style="color: {{ titleColor }}">{{ title }}</h2>
+
+      {{# image }}
+        <div class="post__img-wrapper">
+          <img class="post__img"
+            src="../assets/img/{{ image.name }}.{{ image.ext }}" alt=""
+            srcset="../assets/img/{{ image.name }}.{{ image.ext }} 1x,
+                    ../assets/img/{{ image.name }}@2x.{{ image.ext }} 2x">
+        </div>
+      {{/ image }}
+
+      <div class="post__content">
+        {{# description }}
+          <p class="post__desc">
+            {{ description }}
+          </p>
+        {{/ description }}
+
+        {{# channelName }}
+          <p class="post__channel">
+            {{ channelName }}
+          </p>
+        {{/ channelName }}
+
+        <div class="post__actions post-actions">
+          <button class="post-actions__button" type="button">
+            <span class="visuallyhidden">Открыть меню</span>
+            <svg class="icon icon--dots"><use xlink:href="#dots"/></svg>
+          </button>
+
+          <button class="post-actions__button" type="button">
+            <span class="visuallyhidden">Открыть меню</span>
+            <svg class="icon icon--heart"><use xlink:href="#heart"/></svg>
+          </button>
+        </div>
+      </div>
+    </article>
+  </template>
+
+  <script src="../assets/js/data.js"></script>
+  <script src="../assets/js/common.js"></script>
+</body>
+</html>
