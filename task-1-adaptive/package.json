@@ -6,6 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "semistandard",
+    "lint-fix": "semistandard --fix",
     "start": "gulp build:dev && gulp serve",
     "deploy": "gulp build:deploy && gulp deploy"
   },
@@ -30,6 +31,7 @@
     "gulp-rename": "^1.2.2",
     "gulp-rimraf": "^0.2.2",
     "gulp-sass": "^3.1.0",
+    "gulp-sourcemaps": "^2.6.4",
     "postcss": "^6.0.16",
     "run-sequence": "^2.2.1",
     "semistandard": "^11.0.0"

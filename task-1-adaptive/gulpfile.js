@@ -2,10 +2,9 @@
 const gulp = require('gulp');
 const server = require('browser-sync');
 const sass = require('gulp-sass');
+const sourcemaps = require('gulp-sourcemaps');
 const plumber = require('gulp-plumber');
 const postcss = require('gulp-postcss');
-const csso = require('gulp-csso');
-const rename = require('gulp-rename');
 const autoprefixer = require('autoprefixer');
 const imagemin = require('gulp-imagemin');
 const concat = require('gulp-concat');
@@ -14,35 +13,33 @@ const rimraf = require('rimraf');
 const babel = require('gulp-babel');
 const ghPages = require('gulp-gh-pages');
 
-gulp.task('clean', function (done) {
-  rimraf('./build', done);
-});
-
+// Js
+// ------------------------------
 gulp.task('js', () => {
   gulp.src([
-    'src/**/data.js'
+    'src/**/data.js', 'src/**/common.js'
   ])
-    .pipe(gulp.dest('./build/assets'));
-
-  gulp.src([
-    'src/**/*.js', '!src/**/data.js'
-  ])
-    .pipe(concat('common.js'))
-    // .pipe(babel())
-    .pipe(gulp.dest('./build/assets/js'));
+  .pipe(sourcemaps.init())
+  .pipe(concat('common.js'))
+  .pipe(babel())
+  .pipe(sourcemaps.write())
+  .pipe(gulp.dest('./build/assets/js'));
 });
 
+// Styles
+// ------------------------------
 gulp.task('style', () => {
   gulp.src('src/scss/styles.scss')
     .pipe(plumber())
-    .pipe(sass())
+    .pipe(sourcemaps.init())
+    .pipe(sass().on('error', sass.logError))
+    .pipe(sourcemaps.write())
     .pipe(postcss([ autoprefixer() ]))
-    .pipe(gulp.dest('./build/assets/css'))
-    .pipe(csso())
-    .pipe(rename('styles.min.css'))
     .pipe(gulp.dest('./build/assets/css'));
 });
 
+// Images
+// ------------------------------
 gulp.task('images', () => {
   gulp.src('src/img/*.*')
     .pipe(imagemin({
@@ -51,32 +48,30 @@ gulp.task('images', () => {
     .pipe(gulp.dest('./build/assets/img'));
 });
 
+// Copy
+// ------------------------------
 gulp.task('copy:dev', () => {
   gulp.src('src/preview/*.*')
     .pipe(gulp.dest('./build/preview'));
   gulp.src('src/img/*.*')
     .pipe(gulp.dest('./build/assets/img'));
-  gulp.src('src/*.html')
-    .pipe(gulp.dest('./build'));
   gulp.src('src/fonts/*')
     .pipe(gulp.dest('./build/assets/fonts'));
+  gulp.src('src/*.html')
+    .pipe(gulp.dest('./build'));
 });
 
 gulp.task('copy:deploy', () => {
-  gulp.src('src/*.html')
-    .pipe(gulp.dest('./build'));
   gulp.src('src/fonts/*')
     .pipe(gulp.dest('./build/assets/fonts'));
-});
-
-gulp.task('fonts', () => {
-  gulp.src('src/fonts/*')
-    .pipe(gulp.dest('./build/assets/fonts'));
-});
-
-gulp.task('html', () => {
   gulp.src('src/*.html')
     .pipe(gulp.dest('./build'));
+});
+
+// Build
+// ------------------------------
+gulp.task('clean', function (done) {
+  rimraf('./build', done);
 });
 
 gulp.task('build:dev', function (done) {
@@ -100,7 +95,7 @@ gulp.task('build:deploy', function (done) {
   );
 });
 
-gulp.task('deploy', function() {
+gulp.task('deploy', function () {
   return gulp.src('build/**/*')
     .pipe(ghPages());
 });
