@@ -111,5 +111,5 @@ gulp.task('serve', () => {
   gulp.watch('src/js/**/*.js', ['js']).on('change', server.reload);
   gulp.watch('src/scss/**/*.scss', ['style']).on('change', server.reload);
   gulp.watch('src/img/*.*', ['images']).on('change', server.reload);
-  gulp.watch('src/**/*.html', ['html']).on('change', server.reload);
+  gulp.watch('src/**/*.html', ['copy:dev']).on('change', server.reload);
 });

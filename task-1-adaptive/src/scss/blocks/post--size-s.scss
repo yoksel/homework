@@ -1,19 +1,31 @@
 .post--size-s {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  grid-template-areas:
+          "title"
+          "content";
 
   @media (min-width: $bp-two-cols) {
     align-items: flex-start;
     flex-direction: column;
-    grid-column: span 2;
+    grid-column: span 1;
+    grid-gap: 10px;
   }
 
   @media (min-width: $bp-three-cols) {
-    grid-column: span 1;
+    grid-column: span 2;
   }
 
   @media (min-width: $bp-tablet) {
+    display: flex;
     height: 230px;
     margin-bottom: 40px;
     grid-column: span 2;
+  }
+
+  @media (min-width: 1200px) {
+    margin-bottom: 0;
+    grid-gap: 20px;
   }
 
   @media (min-width: 1500px) {
@@ -26,35 +38,58 @@
   }
 
   &.post--has-image {
+    min-height: 0;
+    grid-row-gap: 10px;
+    grid-column-gap: 10px;
+    grid-template-columns: 1fr 2fr;
+    grid-template-areas:
+          "img title"
+          "content content";
+
     @media (min-width: 400px) {
-      height: 120px;
-      flex-direction: column;
-      justify-content: space-between;
+      grid-template-areas:
+          "img title"
+          "img content";
     }
 
     @media (min-width: $bp-two-cols) {
-      flex-wrap: wrap;
-      align-items: flex-start;
-      align-content: flex-start;
-      height: 110px;
+      grid-template-columns: 1fr;
+      grid-template-rows: auto 1fr auto;
+      grid-template-areas:
+          "title"
+          "img"
+          "content";
     }
 
     @media (min-width: $bp-three-cols) {
-      height: auto;
-      flex-wrap: nowrap;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: auto 1fr;
+      grid-template-areas:
+          "img title"
+          "img content";
     }
 
     @media (min-width: $bp-tablet) {
-      height: 230px;
       flex-wrap: wrap;
     }
 
     @media (min-width: 1200px) {
+      min-height: 100px;
+      height: auto;
+      display: grid;
+      grid-row-gap: 0;
+      grid-column-gap: 20px;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: auto 1fr;
+      grid-template-areas:
+          "img title"
+          "img content";
     }
 
     @media (min-width: 1700px) {
-      min-height: 0;
       height: 180px;
+      min-height: 0;
+      grid-column-gap: 30px;
     }
 
   }
@@ -65,14 +100,10 @@
     margin-bottom: 0;
     padding-left: 0;
     flex-shrink: 0;
-    line-height: 1.2;
-
-    @media (min-width: $bp-tablet) {
-      max-height: 90px;
-    }
 
     @media (min-width: $bp-tablet) {
       max-height: none;
+      line-height: 1.2;
     }
 
     @media (min-width: 1200px) {
@@ -87,18 +118,9 @@
     box-sizing: border-box;
     background: #FFF;
 
-    @media (min-width: 400px) {
-      max-width: 60%;
-      padding-left: 15px;
-    }
-
-    @media (min-width: $bp-two-cols) {
-      max-width: calc(100% - 224px);
-    }
-
     @media (min-width: $bp-three-cols) {
-      max-width: 100%;
-      padding-left: 0;
+      max-height: 140px;
+      overflow: hidden;
     }
 
     @media (min-width: $bp-tablet) {
@@ -108,26 +130,22 @@
 
     @media (min-width: 1700px) {
       position: static;
-      max-width: calc((100% - 25px) / 2);
     }
   }
 
   /* Image
   ------------------------------ */
   &.post--has-image .post__img-wrapper {
+
     @media (min-width: 400px) {
-      width: 40%;
+      width: auto;
       max-height: 120px;
-      order: -1;
       align-items: center;
     }
 
-    @media (min-width: $bp-two-cols) {
-      width: 224px;
-    }
-
     @media (min-width: $bp-three-cols) {
-      margin-bottom: 15px;
+      max-height: 100%;
+      align-self: stretch;
     }
 
     @media (min-width: $bp-tablet) {
@@ -138,14 +156,17 @@
       bottom: 0;
     }
 
+    @media (min-width: 1200px) {
+      position: static;
+      max-height: 180px;
+    }
+
     @media (min-width: 1500px) {
       justify-content: flex-start;
     }
 
     @media (min-width: 1700px) {
       position: static;
-      max-width: calc((100% - 25px) / 2);
-      margin-right: 25px;
     }
   }
 
@@ -155,24 +176,20 @@
     margin-top: 0;
     flex-grow: 1;
 
+    @media (min-width: 400px) {
+
+    }
+
     @media (min-width: $bp-tablet) {
       flex-direction: column;
     }
   }
 
   &.post--has-image .post__content {
-    margin-left: auto;
-    width: 35px;
-    flex-grow: 0;
 
     @media (min-width: 400px) {
-      width: 60%;
-      margin-left: 0;
-      padding-left: 15px;
-    }
-
-    @media (min-width: $bp-two-cols) {
-      width: calc(100% - 224px);
+      flex-direction: row;
+      justify-content: flex-end;
     }
 
     @media (min-width: $bp-three-cols) {
@@ -187,10 +204,9 @@
       flex-grow: 1;
     }
 
-    @media (min-width: 1700px) {
-      width: calc((100% - 25px) / 2);
-      margin-left: 0;
-      flex-grow: 0;
+    @media (min-width: 1200px) {
+      width: 65px;
+      margin-left: auto;
     }
   }
 
@@ -201,11 +217,7 @@
     line-height: 1.45;
 
     @media (min-width: $bp-two-cols) {
-      max-height: 105px;
-    }
-
-    @media (min-width: $bp-three-cols) {
-      max-height: 135px;
+      max-height: 100px;
     }
 
     @media (min-width: $bp-tablet) {
@@ -213,7 +225,15 @@
     }
 
     @media (min-width: 1200px) {
-      max-height: 145px;
+      max-height: 80px;
+    }
+
+    @media (min-width: 1500px) {
+      max-height: 90px;
+    }
+
+    @media (min-width: 1500px) {
+      max-height: 170px;
     }
   }
 
@@ -227,39 +247,40 @@
     margin-top: 0;
     flex-grow: 1;
 
-    @media (min-width: $bp-two-cols) {
+    @media (min-width: 400px) {
       position: absolute;
-      bottom: 10px;
+      bottom: 0;
       right: 0;
+      height: 50px;
       width: 65px;
       margin-right: 10px;
       align-items: center;
     }
-
-    @media (min-width: 1700px) {
-      bottom: 14px;
-    }
   }
 
   &.post--has-image .post-actions {
-    position: static;
-    width: 35px;
+    position: relative;
+    z-index: 1;
+    bottom: 0;
+    height: auto;
     box-sizing: border-box;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
 
     @media (min-width: 400px) {
-      width: 100%;
-      flex-direction: row;
+      flex-grow: 0;
     }
 
     @media (min-width: $bp-tablet) {
+      width: 35px;
+      padding-bottom: 8px;
+      margin-right: 0;
       flex-direction: column;
       flex-grow: 1;
-      padding-bottom: 8px;
     }
 
-    @media (min-width: 1700px) {
+    @media (min-width: 1200px) {
+      width: 65px;
       flex-direction: row;
     }
   }

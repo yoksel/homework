@@ -1,7 +1,5 @@
 .post {
   position: relative;
-  min-height: 100px;
-  height: 230px;
   margin-bottom: 25px;
   display: flex;
   flex-wrap: wrap;
@@ -18,11 +16,11 @@
   }
 
   @media (min-width: 1200px) {
-    height: 230px;
+    height: auto;
+    max-height: 180px;
   }
 
   @media (min-width: 1700px) {
-    height: 180px;
   }
 }
 
@@ -104,9 +102,15 @@
 /* Channel
 ------------------------------ */
 .post__channel {
-  margin: 12px 0;
-  padding-right: 65px;
+  margin: 0;
+  height: 50px;
+  display: flex;
+  align-items: center;
   font-weight: bold;
+
+  @media (min-width: 400px) {
+    padding-right: 95px;
+  }
 
   @media (min-width: 1700px) {
     margin: 16px 0;

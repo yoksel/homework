@@ -14,7 +14,7 @@ const data = [
     size: 'm'
   },
   {
-    title: 'Первому игроку приготовиться: 80-е – 90-е',
+    title: 'Первому игроку приготовиться: <nobr>80-е – 90-е</nobr>',
     titleColor: '#334d5b',
     image: 'img/3.png',
     size: 's'

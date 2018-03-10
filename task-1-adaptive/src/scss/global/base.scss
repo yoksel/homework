@@ -43,7 +43,7 @@ IMG {
 /* Layout
 ------------------------------ */
 .page-wrapper {
-  margin: 0 auto;
+  margin: 0 auto 30px;
   padding: 0 15px;
   box-sizing: border-box;
 
@@ -66,10 +66,10 @@ IMG {
   }
 
   @media (min-width: 1700px) {
-    max-width: 1500px;
+    max-width: 1490px;
   }
 
   @media (min-width: 1900px) {
-    max-width: 1575px;
+    max-width: 1610px;
   }
 }
