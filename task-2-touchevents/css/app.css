@@ -186,7 +186,10 @@ body {
   font-size: 30px;
   color: #FFF;
   pointer-events: none;
-  user-select: none;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
 }
 
 /* Level 0
@@ -211,16 +214,15 @@ body {
 
 /* Level 1
  ------------------------------*/
- .door-riddle_1 {
+.door-riddle_1 {
   flex-direction: column;
   justify-content: center;
 }
 
 .door-riddle__cat {
   position: relative;
-  width: 100%;
-  padding-top: 100%;
-
+  width: 100vmin;
+  height: 100vmin;
   background-image: url(../img/door_level_1.jpg);
   background-repeat: no-repeat;
   background-position: 50% 50%;
@@ -230,10 +232,8 @@ body {
 
 .door-riddle__spots {
   position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
+  width: 100%;
+  height: 100%;
   display: grid;
   grid-template-columns: repeat(8, 1fr);
   grid-template-rows: repeat(6, 1fr);
@@ -294,7 +294,10 @@ body {
   flex-wrap: wrap;
   justify-content: center;
   touch-action: none;
-  user-select: none;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
 }
 
 .door-icon {
@@ -304,7 +307,10 @@ body {
   vector-effect: non-scaling-stroke;
   overflow: visible;
   touch-action: none;
-  user-select: none;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
 }
 
 .door-icon * {
@@ -325,7 +331,20 @@ body {
   position: fixed;
   fill: gold;
   stroke: #000;
-  animation: 3s colors infinite;
+  -webkit-animation: 3s colors infinite;
+          animation: 3s colors infinite;
+}
+
+@-webkit-keyframes colors {
+  25% {
+    fill: crimson;
+  }
+  50% {
+    fill: orangered;
+  }
+  75% {
+    fill: teal;
+  }
 }
 
 @keyframes colors {

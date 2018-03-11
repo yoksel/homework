@@ -12,8 +12,10 @@
   "author": "yoksel",
   "license": "ISC",
   "devDependencies": {
+    "autoprefixer": "^8.1.0",
     "browser-sync": "^2.23.6",
     "gulp": "^3.9.1",
+    "gulp-postcss": "^7.0.1",
     "semistandard": "^11.0.0"
   }
 }

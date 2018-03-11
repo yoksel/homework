@@ -1,8 +1,18 @@
 'use strict';
 const gulp = require('gulp');
 const server = require('browser-sync');;
+const postcss = require('gulp-postcss');
+const autoprefixer = require('autoprefixer');
 
-gulp.task('serve', () => {
+// Styles
+// ------------------------------
+gulp.task('style', () => {
+  gulp.src('src/css/app.css')
+    .pipe(postcss([ autoprefixer() ]))
+    .pipe(gulp.dest('./css'));
+});
+
+gulp.task('serve', ['style'], () => {
   server.init({
     server: '.',
     notify: false,
@@ -10,6 +20,7 @@ gulp.task('serve', () => {
     ui: false
   });
 
+  gulp.watch('src/css/**/*.css', ['style']).on('change', server.reload);
   gulp.watch(['js/**/*.js', 'css/**/*.css', '*.html']).on('change', server.reload);
 
 });
