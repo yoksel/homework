@@ -4,6 +4,7 @@ html, body {
 
 body {
   background-color: #ACC0C1;
+  font-family: Georgia, serif;
 }
 
 .container {
@@ -234,6 +235,18 @@ body {
   display: grid;
   grid-template-columns: repeat(8, 1fr);
   grid-template-rows: repeat(6, 1fr);
+  touch-action: none;
+}
+
+.door-riddle__spot,
+.door-riddle__spot:focus,
+.door-riddle__spot:active {
+  padding: 0;
+  background: none;
+  border: none;
+  outline: none;
+  touch-action: none;
+  user-select: none;
 }
 
 .door-riddle__spot_ear-right {
