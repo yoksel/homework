@@ -1,3 +1,5 @@
+/* global Hammer, DoorBase */
+
 // ===================== Пример кода первой двери =======================
 /**
  * @class Door0
@@ -6,7 +8,7 @@
  * @param {Function} onUnlock
  */
 
-function Door0(number, onUnlock) {
+function Door0 (number, onUnlock) {
   DoorBase.apply(this, arguments);
 
   var buttons = [
@@ -15,28 +17,28 @@ function Door0(number, onUnlock) {
     this.popup.querySelector('.door-riddle__button_2')
   ];
 
-  buttons.forEach(function(b) {
+  buttons.forEach(function (b) {
     b.addEventListener('pointerdown', _onButtonPointerDown.bind(this));
     b.addEventListener('pointerup', _onButtonPointerUp.bind(this));
     b.addEventListener('pointercancel', _onButtonPointerUp.bind(this));
     b.addEventListener('pointerleave', _onButtonPointerUp.bind(this));
   }.bind(this));
 
-  function _onButtonPointerDown(e) {
+  function _onButtonPointerDown (e) {
     e.target.classList.add('door-riddle__button_pressed');
     checkCondition.apply(this);
   }
 
-  function _onButtonPointerUp(e) {
+  function _onButtonPointerUp (e) {
     e.target.classList.remove('door-riddle__button_pressed');
   }
 
   /**
    * Проверяем, можно ли теперь открыть дверь
    */
-  function checkCondition() {
+  function checkCondition () {
     var isOpened = true;
-    buttons.forEach(function(b) {
+    buttons.forEach(function (b) {
       if (!b.classList.contains('door-riddle__button_pressed')) {
         isOpened = false;
       }
@@ -60,7 +62,7 @@ Door0.prototype.constructor = DoorBase;
  * @param {Number} number
  * @param {Function} onUnlock
  */
-function Door1(number, onUnlock) {
+function Door1 (number, onUnlock) {
   DoorBase.apply(this, arguments);
 
   // ==== Напишите свой код для открытия второй двери здесь ====
@@ -69,25 +71,22 @@ function Door1(number, onUnlock) {
   var classPressed = 'door-riddle__cat_pressed';
   var isStartElemMatch = false;
 
-  var isDragged = false;
   var slideCounter = 0;
   var messages = [
     {
       className: 'door-riddle__spot_paw-right',
-      text: 'Погладь правую лапку',
+      text: 'Погладь правую лапку'
     },
     {
       className: 'door-riddle__spot_paw-left',
-      text: 'А теперь левую',
+      text: 'А теперь левую'
     },
     {
       className: 'door-riddle__spot_head',
-      text: 'Теперь за ушком',
-      fingers: 2,
+      text: 'Теперь за ушком'
     },
     {
-      text: 'Гладь как следует, не отлынивай',
-      fingers: 2,
+      text: 'Гладь как следует, не отлынивай'
     },
     {
       text: 'Всё, проходи'
@@ -99,7 +98,7 @@ function Door1(number, onUnlock) {
   cat.addEventListener('pointerup', _onButtonPointerUp.bind(this));
   cat.addEventListener('pointercancel', _onButtonPointerUp.bind(this));
 
-  function _onButtonPointerDown(e) {
+  function _onButtonPointerDown (e) {
     if (slideCounter > 0) {
       var currentMessage = messages[slideCounter - 1];
       var waitedClass = currentMessage.className;
@@ -108,8 +107,7 @@ function Door1(number, onUnlock) {
         if (e.target.classList.contains(waitedClass)) {
           isStartElemMatch = true;
         }
-      }
-      else {
+      } else {
         isStartElemMatch = true;
       }
     }
@@ -118,7 +116,7 @@ function Door1(number, onUnlock) {
     cat.classList.add(classPressed);
   }
 
-  function _onButtonPointerMove(e) {
+  function _onButtonPointerMove (e) {
     if (isStartElemMatch || slideCounter === 0) {
       changeStep.apply(this);
 
@@ -128,12 +126,12 @@ function Door1(number, onUnlock) {
     }
   }
 
-  function _onButtonPointerUp(e) {
+  function _onButtonPointerUp (e) {
     checkCondition.apply(this);
     cat.classList.remove(classPressed);
   }
 
-  function changeStep() {
+  function changeStep () {
     if (messages[slideCounter]) {
       text.innerHTML = messages[slideCounter].text;
       slideCounter++;
@@ -141,8 +139,8 @@ function Door1(number, onUnlock) {
     }
   }
 
-  function checkCondition() {
-    if (slideCounter == messages.length) {
+  function checkCondition () {
+    if (slideCounter === messages.length) {
       this.unlock();
     }
   }
@@ -157,7 +155,7 @@ Door1.prototype.constructor = DoorBase;
  * @param {Number} number
  * @param {Function} onUnlock
  */
-function Door2(number, onUnlock) {
+function Door2 (number, onUnlock) {
   DoorBase.apply(this, arguments);
 
   // ==== Напишите свой код для открытия третьей двери здесь ====
@@ -176,7 +174,7 @@ function Door2(number, onUnlock) {
   keySwipe.addEventListener('pointerleave', _onButtonPointerUp.bind(this));
   keySwipe.addEventListener('pointercancel', _onButtonPointerUp.bind(this));
 
-  function _onButtonPointerDown(e) {
+  function _onButtonPointerDown (e) {
     if (e.target.classList.contains(keyClassName)) {
       key.style.left = e.clientX - halfKeyHole;
       key.style.top = e.clientY - halfKeyHole;
@@ -186,7 +184,7 @@ function Door2(number, onUnlock) {
     keySwipe.classList.add(classPressed);
   }
 
-  function _onButtonPointerMove(e) {
+  function _onButtonPointerMove (e) {
     if (!keySwipe.classList.contains(classPressed)) {
       return;
     }
@@ -204,7 +202,7 @@ function Door2(number, onUnlock) {
     }
   }
 
-  function _onButtonPointerUp(e) {
+  function _onButtonPointerUp (e) {
     keySwipe.classList.remove(classPressed);
   }
 
@@ -220,7 +218,7 @@ Door2.prototype.constructor = DoorBase;
  * @param {Number} number
  * @param {Function} onUnlock
  */
-function Box(number, onUnlock) {
+function Box (number, onUnlock) {
   DoorBase.apply(this, arguments);
   var that = this;
   var isUnlocked = false;
@@ -235,10 +233,9 @@ function Box(number, onUnlock) {
 
   var mc = new Hammer.Manager(takeAway);
   var pinch = new Hammer.Pinch();
-  var rotate = new Hammer.Rotate();
   mc.add([pinch]);
 
-  mc.on("pinch", function(ev) {
+  mc.on('pinch', function (ev) {
     if (!isUnlocked) {
       that.unlock();
       isUnlocked = true;
@@ -247,7 +244,7 @@ function Box(number, onUnlock) {
 
   // ==== END Напишите свой код для открытия сундука здесь ====
 
-  this.showCongratulations = function() {
+  this.showCongratulations = function () {
     alert('Поздравляю! Игра пройдена!');
   };
 }

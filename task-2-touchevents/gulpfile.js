@@ -1,6 +1,6 @@
 'use strict';
 const gulp = require('gulp');
-const server = require('browser-sync');;
+const server = require('browser-sync');
 const postcss = require('gulp-postcss');
 const autoprefixer = require('autoprefixer');
 
@@ -22,5 +22,4 @@ gulp.task('serve', ['style'], () => {
 
   gulp.watch('src/css/**/*.css', ['style']).on('change', server.reload);
   gulp.watch(['js/**/*.js', 'css/**/*.css', '*.html']).on('change', server.reload);
-
 });

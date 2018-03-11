@@ -4,7 +4,7 @@
  * @param {Number} number
  * @param {Function} onUnlock
  */
-function DoorBase(number, onUnlock) {
+function DoorBase (number, onUnlock) {
   this.number = number;
   this.onUnclockCallback = onUnlock;
 
@@ -19,25 +19,25 @@ function DoorBase(number, onUnlock) {
   this.door.addEventListener('click', onDoorClick.bind(this));
   this.close.addEventListener('click', onCloseClick.bind(this));
 
-  function onDoorClick() {
+  function onDoorClick () {
     if (!this.isDisabled) {
       this.openPopup();
     }
   }
 
-  function onCloseClick() {
+  function onCloseClick () {
     this.closePopup();
   }
 }
 
 DoorBase.prototype = {
-  openPopup: function() {
+  openPopup: function () {
     this.popup.classList.remove('popup_hidden');
   },
-  closePopup: function() {
+  closePopup: function () {
     this.popup.classList.add('popup_hidden');
   },
-  enable: function() {
+  enable: function () {
     this.door.classList.remove('door_disabled');
     this.isDisabled = false;
   },
@@ -45,14 +45,14 @@ DoorBase.prototype = {
    * Вызывается, если после последовательности действий
    * дверь считается открытой
    */
-  unlock: function() {
+  unlock: function () {
     this.door.classList.remove('door_locked');
     this.isLocked = false;
     this.closePopup();
     this.onUnclockCallback();
     this.showCongratulations();
   },
-  showCongratulations: function() {
-    alert('Дверь ' + this.number + ' открыта!')
+  showCongratulations: function () {
+    alert('Дверь ' + this.number + ' открыта!');
   }
 };

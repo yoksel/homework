@@ -2,7 +2,7 @@
  * @class App
  * @param {Element} el
  */
-function App(el) {
+function App (el) {
   var appEl = el,
     doors = [
       new Door0(0, onUnlock),
@@ -17,7 +17,7 @@ function App(el) {
    * Callback вызывается в коде двери
    * Тут даем возможность открыть следующие двери
    */
-  function onUnlock() {
+  function onUnlock () {
     var previousUnlocked;
 
     console.log('onUnlock()');
@@ -33,7 +33,7 @@ function App(el) {
         }
       }
     }
-  };
+  }
 }
 
 // Start the app
