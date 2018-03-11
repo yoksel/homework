@@ -93,6 +93,7 @@ function Door1 (number, onUnlock) {
     }
   ];
 
+
   cat.addEventListener('pointerdown', _onButtonPointerDown.bind(this));
   cat.addEventListener('pointermove', _onButtonPointerMove.bind(this));
   cat.addEventListener('pointerup', _onButtonPointerUp.bind(this));
@@ -163,7 +164,7 @@ function Door2 (number, onUnlock) {
   var classPressed = 'door-riddle__key-swipe_pressed';
   var classMatch = 'door-riddle__key-swipe_match';
   var keyClassName = 'door-icon_key';
-  var key = this.popup.querySelector('.door-icon_key');
+  var key = this.popup.querySelector('.' + keyClassName);
   var keyHole = this.popup.querySelector('.door-icon_keyhole');
   var keyHoleCoords = keyHole.getClientRects()[0];
   var halfKeyHole = keyHoleCoords.width / 2;
@@ -178,10 +179,10 @@ function Door2 (number, onUnlock) {
     if (e.target.classList.contains(keyClassName)) {
       key.style.left = e.clientX - halfKeyHole;
       key.style.top = e.clientY - halfKeyHole;
+      keySwipe.classList.add(classPressed);
     }
 
     keySwipe.setPointerCapture(e.pointerId);
-    keySwipe.classList.add(classPressed);
   }
 
   function _onButtonPointerMove (e) {

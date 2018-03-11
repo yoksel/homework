@@ -322,7 +322,6 @@ body {
   stroke-width: 1;
   vector-effect: non-scaling-stroke;
   overflow: visible;
-  touch-action: none;
   -webkit-user-select: none;
      -moz-user-select: none;
       -ms-user-select: none;
@@ -335,16 +334,16 @@ body {
 }
 
 .door-icon_key {
+  display: block;
   position: fixed;
   z-index: 1;
-  bottom: 0;
+  bottom: 40px;
   width: 100px;
-  height: 100px;
   cursor: pointer;
+  touch-action: none;
 }
 
 .door-riddle__key-swipe_pressed .door-icon_key {
-  position: fixed;
   fill: gold;
   stroke: #000;
   -webkit-animation: 3s colors infinite;
