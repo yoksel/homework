@@ -7,8 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "semistandard",
     "lint-fix": "semistandard --fix",
-    "start": "gulp build:dev && gulp serve",
-    "deploy": "gulp build:deploy && gulp deploy"
+    "start": "gulp build:dev && gulp serve"
   },
   "author": "yoksel",
   "license": "ISC",
