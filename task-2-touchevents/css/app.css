@@ -173,8 +173,6 @@ body {
 
 .door-riddle__text {
   position: absolute;
-  pointer-events: none;
-  user-select: none;
   top: 0;
   z-index: 1;
   height: 120px;
@@ -187,6 +185,8 @@ body {
   text-align: center;
   font-size: 30px;
   color: #FFF;
+  pointer-events: none;
+  user-select: none;
 }
 
 /* Level 0
@@ -256,7 +256,7 @@ body {
   grid-row: 5/7;
 }
 .door-riddle__spot_paw-left {
-  grid-column: 4/7;
+  grid-column: 4/8;
   grid-row: 5/7;
 }
 
@@ -286,35 +286,58 @@ body {
 }
 
 .door-riddle__key-swipe {
+  position: relative;
+  z-index: 1000;
   width: 200px;
   height: calc(50% + 75px);
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   touch-action: none;
+  user-select: none;
 }
 
 .door-icon {
   fill: transparent;
   stroke: white;
   stroke-width: 1;
+  vector-effect: non-scaling-stroke;
   overflow: visible;
+  touch-action: none;
+  user-select: none;
 }
 
 .door-icon * {
   pointer-events: none;
+  touch-action: none;
 }
 
 .door-icon_key {
   position: fixed;
+  z-index: 1;
   bottom: 0;
   width: 100px;
   height: 100px;
-  stroke-width: 10;
   cursor: pointer;
 }
 
 .door-riddle__key-swipe_pressed .door-icon_key {
+  position: fixed;
   fill: gold;
+  stroke: #000;
+  animation: 3s colors infinite;
+}
+
+@keyframes colors {
+  25% {
+    fill: crimson;
+  }
+  50% {
+    fill: orangered;
+  }
+  75% {
+    fill: teal;
+  }
 }
 
 .door-riddle__key-swipe_match .door-icon_key {
@@ -322,16 +345,16 @@ body {
 }
 
 .door-icon_keyhole {
-  width: 150px;
-  height: 150px;
+  width: 125px;
+  height: 125px;
 }
 
 .door-icon_keyhole:hover {
-  fill: teal;
+  fill: lightseagreen;
 }
 
 .door-riddle__key-swipe_match .door-icon_keyhole {
-  fill: yellowgreen;
+  stroke: yellowgreen;
 }
 
 .door-riddle__takeaway {

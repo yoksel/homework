@@ -160,6 +160,7 @@ Door1.prototype.constructor = DoorBase;
 function Door2(number, onUnlock) {
   DoorBase.apply(this, arguments);
 
+  // ==== Напишите свой код для открытия третьей двери здесь ====
   var keySwipe = this.popup.querySelector('.door-riddle__key-swipe');
   var classPressed = 'door-riddle__key-swipe_pressed';
   var classMatch = 'door-riddle__key-swipe_match';
@@ -169,7 +170,6 @@ function Door2(number, onUnlock) {
   var keyHoleCoords = keyHole.getClientRects()[0];
   var halfKeyHole = keyHoleCoords.width / 2;
 
-  // ==== Напишите свой код для открытия третьей двери здесь ====
   keySwipe.addEventListener('pointerdown', _onButtonPointerDown.bind(this));
   keySwipe.addEventListener('pointermove', _onButtonPointerMove.bind(this));
   keySwipe.addEventListener('pointerup', _onButtonPointerUp.bind(this));
@@ -205,7 +205,6 @@ function Door2(number, onUnlock) {
   }
 
   function _onButtonPointerUp(e) {
-    checkCondition.apply(this);
     keySwipe.classList.remove(classPressed);
   }
 
