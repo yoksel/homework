@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8">
+    <title>Dungeon of Doom</title>
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/app.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+<body>
+
+  <!-- Thanks for assets to Kenny at http://kenney.nl/assets/platformer-pack-redux -->
+  <div class="app container">
+    <div class="level level_0"><div class="door door_locked door_level_0"></div></div>
+    <div class="level level_1"><div class="door door_locked door_disabled door_level_1"></div></div>
+    <div class="level level_2"><div class="door door_locked door_disabled door_level_2"></div></div>
+    <div class="level level_3"><div class="box box_locked door door_disabled door_level_3"></div></div>
+    <div class="level level_4"></div>
+
+    <div class="popup popup_hidden popup_level_0">
+      <div class="popup__content popup__content_level_0" touch-action="none">
+        <div class="popup__close">╳</div>
+        <div class="door-riddle">
+          <div class="door-riddle__button door-riddle__button_0"></div>
+          <div class="door-riddle__button door-riddle__button_1"></div>
+          <div class="door-riddle__button door-riddle__button_2"></div>
+        </div>
+      </div>
+    </div>
+    <div class="popup popup_hidden popup_level_1">
+      <div class="popup__content popup__content_level_1">
+        <div class="door-riddle door-riddle_1">
+          <h2 class="door-riddle__text">Погладь кота</h2>
+          <div class="door-riddle__cat">
+            <div class="door-riddle__spots">
+              <div class="door-riddle__spot door-riddle__spot_head door-riddle__spot_ear door-riddle__spot_ear-left"></div>
+
+              <div class="door-riddle__spot door-riddle__spot_head door-riddle__spot_face"></div>
+
+              <div class="door-riddle__spot door-riddle__spot_head door-riddle__spot_ear door-riddle__spot_ear-right"></div>
+
+              <div class="door-riddle__spot door-riddle__spot_paw door-riddle__spot_paw-left"></div>
+              <div class="door-riddle__spot door-riddle__spot_paw door-riddle__spot_paw-right"></div>
+            </div>
+          </div>
+        </div>
+        <div class="popup__close">╳</div>
+      </div>
+    </div>
+    <div class="popup popup_hidden popup_level_2">
+      <div class="popup__content popup__content_level_2">
+        <div class="door-riddle door-riddle_2">
+          <h2 class="door-riddle__text">Открой дверь ключом</h2>
+          <div class="popup__close">╳</div>
+
+          <div class="door-riddle__key-swipe">
+            <svg class="door-icon door-icon_keyhole"
+              xmlns="http://www.w3.org/2000/svg" viewBox="0 0 47.77 47.77"><path d="M39.354 23.699h-.006c-.057-4.646-1.136-4.554-1.266-4.712-.135-.163.781-4.294-1.792-4.48-3.604-.069-3.396-6.975-3.396-6.975H30.84a6.894 6.894 0 1 0-13.724 0h-2.24s.209 6.906-3.396 6.975c-2.574.186-1.658 4.317-1.792 4.48-.131.158-1.209.066-1.267 4.712h-.005l.002.186c.001.064-.001.119-.001.186h.005c.057 4.646 1.136 4.554 1.267 4.712.134.163-.781 4.294 1.792 4.479 3.605.069 3.396 6.975 3.396 6.975h2.054a6.895 6.895 0 1 0 13.757.639c0-.215-.014-.428-.033-.639h2.24s-.209-6.905 3.396-6.975c2.575-.186 1.658-4.316 1.792-4.479.13-.158 1.209-.066 1.267-4.712h.004l-.002-.187.002-.185zm-19.411 8.246l2.349-8.492a3.958 3.958 0 0 1 1.48-7.63 3.957 3.957 0 0 1 1.923 7.419l2.261 8.703h-8.013z"/></svg>
+
+            <svg class="door-icon door-icon_key"
+              xmlns="http://www.w3.org/2000/svg" viewBox="0 0 453.705 453.705"><path d="M205.017 341.995l-32.166-32.161 110.691-110.701c40.217 21.676 91.214 15.992 125.209-17.947 41.406-41.462 41.406-108.687 0-150.091-41.458-41.46-108.688-41.46-150.149 0-33.937 33.941-39.593 84.999-17.931 125.157L22.751 374.216c-11.803 11.789-11.803 31.097 0 42.881 11.785 11.789 31.097 11.789 42.881 0l32.161 32.165c5.927 5.923 15.521 5.923 21.443 0l21.443-21.44c5.934-5.922 5.934-15.518 0-21.44l-32.163-32.165 21.44-21.506 32.177 32.226c5.923 5.923 15.521 5.923 21.443 0l21.441-21.44a15.233 15.233 0 0 0 0-21.502zM301.488 73.98c17.768-17.768 46.619-17.768 64.387 0 17.702 17.709 17.702 46.612 0 64.324-17.768 17.709-46.619 17.709-64.387 0-17.712-17.711-17.712-46.614 0-64.324z"/>
+              <rect x="0" y="0" width="100%" height="100%" fill="transparent" stroke-width="0"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="popup popup_hidden popup_level_3">
+      <div class="popup__content popup__content_level_3">
+        <div class="popup__close">╳</div>
+
+        <div class="door-riddle__takeaway">
+          <h2 class="door-riddle__text">Забирай свой сундук</h2>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/pep/0.4.1/pep.js"></script>
+  <script src="js/hammer.min.js"></script>
+  <script src="js/doorBase.js"></script>
+  <script src="js/doorOthers.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

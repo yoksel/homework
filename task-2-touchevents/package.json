@@ -1,0 +1,19 @@
+{
+  "name": "homework-2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "semistandard",
+    "lint-fix": "semistandard --fix",
+    "start": "gulp serve"
+  },
+  "author": "yoksel",
+  "license": "ISC",
+  "devDependencies": {
+    "browser-sync": "^2.23.6",
+    "gulp": "^3.9.1",
+    "semistandard": "^11.0.0"
+  }
+}
