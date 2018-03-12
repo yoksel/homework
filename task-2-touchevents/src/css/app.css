@@ -136,6 +136,8 @@ body {
 
   background: #000 url(../img/door_level_0.jpg) no-repeat center;
   background-size: cover;
+
+  touch-action: none;
 }
 
 .popup__close {
