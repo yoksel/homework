@@ -309,7 +309,6 @@ body {
   width: 200px;
   height: calc(50% + 75px);
   display: flex;
-  background: black; /* Don't remove */
   flex-wrap: wrap;
   justify-content: center;
   touch-action: none;
