@@ -176,13 +176,13 @@ function Door2 (number, onUnlock) {
   keySwipe.addEventListener('pointercancel', _onButtonPointerUp.bind(this));
 
   function _onButtonPointerDown (e) {
+
     if (e.target.classList.contains(keyClassName)) {
       key.style.left = e.clientX - halfKeyHole;
       key.style.top = e.clientY - halfKeyHole;
       keySwipe.classList.add(classPressed);
+      keySwipe.setPointerCapture(e.pointerId);
     }
-
-    keySwipe.setPointerCapture(e.pointerId);
   }
 
   function _onButtonPointerMove (e) {

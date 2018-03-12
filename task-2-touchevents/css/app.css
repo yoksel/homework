@@ -309,6 +309,7 @@ body {
   width: 200px;
   height: calc(50% + 75px);
   display: flex;
+  background: black; /* Don't remove */
   flex-wrap: wrap;
   justify-content: center;
   touch-action: none;
@@ -339,8 +340,9 @@ body {
   display: block;
   position: fixed;
   z-index: 1;
-  bottom: 40px;
+  bottom: 50px;
   width: 100px;
+  height: 100px;
   cursor: pointer;
   touch-action: none;
 }

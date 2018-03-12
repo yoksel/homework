@@ -20,8 +20,6 @@ function App (el) {
   function onUnlock () {
     var previousUnlocked;
 
-    console.log('onUnlock()');
-
     // Даем открыть следующую дверь
     for (var i = 0; i < doors.length; i++) {
       if (!doors[i].isLocked) {
