@@ -160,9 +160,9 @@ function Door2 (number, onUnlock) {
   DoorBase.apply(this, arguments);
 
   // ==== Напишите свой код для открытия третьей двери здесь ====
-  var keySwipe = this.popup.querySelector('.door-riddle__key-swipe');
-  var classPressed = 'door-riddle__key-swipe_pressed';
-  var classMatch = 'door-riddle__key-swipe_match';
+  var keySwipe = this.popup.querySelector('.popup__content_level_2');
+  var classPressed = 'popup__content_level_pressed';
+  var classMatch = 'popup__content_level_match';
   var keyClassName = 'door-icon_key';
   var key = this.popup.querySelector('.' + keyClassName);
   var keyHole = this.popup.querySelector('.door-icon_keyhole');

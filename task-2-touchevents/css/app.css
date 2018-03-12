@@ -316,7 +316,6 @@ body {
      -moz-user-select: none;
       -ms-user-select: none;
           user-select: none;
-  background: #111; /* Don't remove */
 }
 
 .door-icon {
@@ -347,7 +346,7 @@ body {
   touch-action: none;
 }
 
-.door-riddle__key-swipe_pressed .door-icon_key {
+.popup__content_level_pressed .door-icon_key {
   fill: gold;
   stroke: #000;
   -webkit-animation: 3s colors infinite;
@@ -378,7 +377,7 @@ body {
   }
 }
 
-.door-riddle__key-swipe_match .door-icon_key {
+.popup__content_level_match .door-icon_key {
   fill: white;
 }
 
