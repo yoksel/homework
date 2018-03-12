@@ -307,6 +307,7 @@ body {
   justify-content: center;
   touch-action: none;
   user-select: none;
+  background: #111; /* Don't remove */
 }
 
 .door-icon {
