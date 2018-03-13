@@ -168,24 +168,33 @@ function Door2 (number, onUnlock) {
   var keyHole = this.popup.querySelector('.door-icon_keyhole');
   var keyHoleCoords = keyHole.getClientRects()[0];
   var halfKeyHole = keyHoleCoords.width / 2;
+  var isTouchStart = false;
 
   keySwipe.addEventListener('pointerdown', _onButtonPointerDown.bind(this));
+  keySwipe.addEventListener('touchstart', _onButtonPointerDown.bind(this));
+
   keySwipe.addEventListener('pointermove', _onButtonPointerMove.bind(this));
+  keySwipe.addEventListener('touchmove', _onButtonPointerMove.bind(this));
   keySwipe.addEventListener('pointerup', _onButtonPointerUp.bind(this));
   keySwipe.addEventListener('pointerleave', _onButtonPointerUp.bind(this));
   keySwipe.addEventListener('pointercancel', _onButtonPointerUp.bind(this));
 
+
   function _onButtonPointerDown (e) {
+    if (isTouchStart) {
+      return;
+    }
+
     if (e.target.classList.contains(keyClassName)) {
+      isTouchStart = true;
       key.style.left = e.clientX - halfKeyHole;
       key.style.top = e.clientY - halfKeyHole;
       keySwipe.classList.add(classPressed);
-      keySwipe.setPointerCapture(e.pointerId);
     }
   }
 
   function _onButtonPointerMove (e) {
-    if (!keySwipe.classList.contains(classPressed)) {
+    if (!keySwipe.classList.contains(classPressed) || !isTouchStart) {
       return;
     }
 
@@ -204,6 +213,7 @@ function Door2 (number, onUnlock) {
 
   function _onButtonPointerUp (e) {
     keySwipe.classList.remove(classPressed);
+    isTouchStart = false;
   }
 
   // ==== END Напишите свой код для открытия третьей двери здесь ====
