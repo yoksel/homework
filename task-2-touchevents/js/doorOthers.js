@@ -70,6 +70,7 @@ function Door1 (number, onUnlock) {
   var text = this.popup.querySelector('.door-riddle__text');
   var classPressed = 'door-riddle__cat_pressed';
   var isStartElemMatch = false;
+  var isTouchStarted = false;
 
   var slideCounter = 0;
   var messages = [
@@ -93,14 +94,23 @@ function Door1 (number, onUnlock) {
     }
   ];
 
-
   cat.addEventListener('pointerdown', _onButtonPointerDown.bind(this));
+  cat.addEventListener('touchstart', _onButtonPointerDown.bind(this));
+
   cat.addEventListener('pointermove', _onButtonPointerMove.bind(this));
+  cat.addEventListener('touchmove', _onButtonPointerMove.bind(this));
+
   cat.addEventListener('pointerup', _onButtonPointerUp.bind(this));
   cat.addEventListener('pointercancel', _onButtonPointerUp.bind(this));
 
   function _onButtonPointerDown (e) {
+    if (isTouchStarted) {
+      return;
+    }
+
     if (slideCounter > 0) {
+      isTouchStarted = true;
+
       var currentMessage = messages[slideCounter - 1];
       var waitedClass = currentMessage.className;
 
@@ -113,7 +123,6 @@ function Door1 (number, onUnlock) {
       }
     }
 
-    cat.setPointerCapture(e.pointerId);
     cat.classList.add(classPressed);
   }
 
@@ -130,6 +139,7 @@ function Door1 (number, onUnlock) {
   function _onButtonPointerUp (e) {
     checkCondition.apply(this);
     cat.classList.remove(classPressed);
+    isTouchStarted = false;
   }
 
   function changeStep () {
@@ -168,25 +178,25 @@ function Door2 (number, onUnlock) {
   var keyHole = this.popup.querySelector('.door-icon_keyhole');
   var keyHoleCoords = keyHole.getClientRects()[0];
   var halfKeyHole = keyHoleCoords.width / 2;
-  var isTouchStart = false;
+  var isTouchStarted = false;
 
   keySwipe.addEventListener('pointerdown', _onButtonPointerDown.bind(this));
   keySwipe.addEventListener('touchstart', _onButtonPointerDown.bind(this));
 
   keySwipe.addEventListener('pointermove', _onButtonPointerMove.bind(this));
   keySwipe.addEventListener('touchmove', _onButtonPointerMove.bind(this));
+
   keySwipe.addEventListener('pointerup', _onButtonPointerUp.bind(this));
   keySwipe.addEventListener('pointerleave', _onButtonPointerUp.bind(this));
   keySwipe.addEventListener('pointercancel', _onButtonPointerUp.bind(this));
 
 
   function _onButtonPointerDown (e) {
-    if (isTouchStart) {
+    if (isTouchStarted) {
       return;
     }
-
     if (e.target.classList.contains(keyClassName)) {
-      isTouchStart = true;
+      isTouchStarted = true;
       key.style.left = e.clientX - halfKeyHole;
       key.style.top = e.clientY - halfKeyHole;
       keySwipe.classList.add(classPressed);
@@ -194,13 +204,17 @@ function Door2 (number, onUnlock) {
   }
 
   function _onButtonPointerMove (e) {
-    if (!keySwipe.classList.contains(classPressed) || !isTouchStart) {
+    if (!keySwipe.classList.contains(classPressed) || !isTouchStarted) {
       return;
     }
 
+    var eX = e.clientX ? e.clientX : e.touches[0].clientX;
+    var eY = e.clientY ? e.clientY : e.touches[0].clientY;
+
     var keyCoords = key.getClientRects()[0];
-    key.style.left = e.clientX - halfKeyHole;
-    key.style.top = e.clientY - halfKeyHole;
+    key.style.left = eX - halfKeyHole;
+    key.style.top = eY - halfKeyHole;
+
     var diffX = Math.abs(keyHoleCoords.x - keyCoords.x);
     var diffY = Math.abs(keyHoleCoords.y - keyCoords.y);
 
@@ -213,9 +227,8 @@ function Door2 (number, onUnlock) {
 
   function _onButtonPointerUp (e) {
     keySwipe.classList.remove(classPressed);
-    isTouchStart = false;
+    isTouchStarted = false;
   }
-
   // ==== END Напишите свой код для открытия третьей двери здесь ====
 }
 Door2.prototype = Object.create(DoorBase.prototype);

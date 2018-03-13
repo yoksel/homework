@@ -293,15 +293,12 @@ body {
 
 /* Level 2
  ------------------------------*/
-.door-riddle_2 {
-  align-items: flex-end;
-}
-
 .door-riddle__key-swipe {
   position: relative;
   z-index: 1000;
   width: 200px;
-  height: calc(50% + 75px);
+  height: 50%;
+  align-self: center;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -320,12 +317,11 @@ body {
 
 .door-icon * {
   pointer-events: none;
-  touch-action: none;
 }
 
 .door-icon_key {
-  display: block;
   position: fixed;
+  display: block;
   z-index: 1;
   bottom: 50px;
   width: 100px;
@@ -357,8 +353,8 @@ body {
 }
 
 .door-icon_keyhole {
-  width: 125px;
-  height: 125px;
+  width: 100px;
+  height: 100px;
 }
 
 .door-icon_keyhole:hover {
