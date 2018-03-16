@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <title>Йа титрадко</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex">
+    <link href="https://fonts.googleapis.com/css?family=Play:400,700&amp;subset=cyrillic-ext" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="./assets/css/styles.css">
+  </head>
+<body class="page">
+
+  <svg class="hidden-svg">
+    <filter id="distortion" filterUnits="userSpaceOnUse" x="-100" y="-100"
+              width="1200" height="1200">
+        <feTurbulence result="turb" baseFrequency="0 .04"
+          numOctaves="1" seed="100" />
+        <feDisplacementMap id="feMap" in="SourceGraphic" in2="turb" scale="0"/>
+        <!-- <feOffset in2="turb" dx="-50" dy="-50"/> -->
+      </filter>
+  </svg>
+
+  <div class="screen">
+    <div class="content" style="filter: url(#distortion);">
+      <video class="video"></video>
+      <!-- <audio class="audio"></audio> -->
+      <div class="canvas-group">
+        <canvas class="canvas canvas--bottom"></canvas>
+        <canvas class="canvas canvas--top"></canvas>
+      </div>
+
+      <div class="audio-visualizer audio-visualizer--hidden">
+        <div class="audio-visualizer__content">
+          <div class="audio-visualizer__title">Audio waveform</div>
+          <canvas class="audio-visualizer__canvas" width="200" height="60"></canvas>
+        </div>
+      </div>
+      <div class="data"></div>
+      <div class="noise"></div>
+    </div>
+  </div>
+
+  <script src="./assets/js/common.js"></script>
+</body>
+</html>

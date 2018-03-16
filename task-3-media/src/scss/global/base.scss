@@ -1,0 +1,239 @@
+$bad-signal-time: 5s;
+
+HTML,
+BODY {
+  height: 100%;
+}
+
+BODY {
+  min-width: 300px;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  background: #FFF;
+  font:  14px/1.4 Play, Verdana, sans-serif;
+  color: #000;
+  background: black;
+}
+
+.hidden-svg {
+  position: absolute;
+  left: 0;
+  transform: translate(-100%);
+}
+
+.screen {
+  position: relative;
+  width: 800px;
+  width: 100%;
+  height: 600px;
+  overflow: hidden;
+  border-radius: 10px;
+
+  &::after {
+    content: "";
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: linear-gradient(
+      hsla(0, 100%, 0, .35) 50%,
+      transparent 50%
+      );
+    background-size: 100% 4px;
+    mix-blend-mode: multiply;
+    pointer-events: none;
+  }
+}
+
+.content {
+  position: relative;
+  width: 800px;
+  width: 100%;
+  height: 600px;
+  /*overflow: hidden;*/
+  flex-shrink: 0;
+  background: crimson;
+
+
+}
+
+.video {
+  display: none;
+}
+
+.noise {
+  display: none;
+
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: url('../img/noise.gif');
+  background-size: 100% 20%;
+  mix-blend-mode: overlay;
+  opacity: .5;
+  pointer-events: none;
+}
+
+.canvas-group {
+  mix-blend-mode: multiply;
+}
+.canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  filter: grayscale(1) contrast(1.1) brightness(2);
+}
+.canvas--bottom {
+  /*display: none;*/
+}
+.canvas--top {
+  display: none;
+  mask-image: linear-gradient(
+      hsla(0, 100%, 0, 0),
+      hsla(0, 100%, 0, 1),
+      hsla(0, 100%, 0, 0));
+  mask-size: 100% 50px;
+  transform: translate(10px, 10px) skew(-5deg) scaleX(1.3);
+  opacity: 0;
+  animation: bad-signal $bad-signal-time infinite;
+  animation-name: bad-signal, bad-signal, bad-signal;
+  animation-duration: 3s, 5s, 11s;
+  animation-delay: 3s, 1.3s, .7s;
+}
+
+@keyframes bad-signal{
+  0% {
+    opacity: 0;
+    transform: translate(-20px, 30px) skew(2deg) scaleX(1);
+  }
+  5% {
+    opacity: 1;
+    transform: translate(10px, 10px) skew(-5deg) scaleX(1.1);
+  }
+  10% {
+    opacity: 0;
+    transform: translate(40px, -10px) skew(3deg) scaleX(.9);
+  }
+  15% {
+    transform: none;
+  }
+}
+
+.data {
+  font-size: 10px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #FFF;
+  text-shadow: 0 0 5px white;
+}
+
+.data__list {
+  position: relative;
+  margin: 0;
+  padding: 20px 0 0 20px;
+  list-style-type: none;
+}
+
+$data-steps: 4;
+$data-show-time: 5s;
+$data-duration: $data-steps * $data-show-time;
+
+.data__item {
+  position: absolute;
+  overflow: hidden;
+  max-height: 0;
+  opacity: .5;
+  white-space: pre;
+  animation: display-text $data-duration linear infinite;
+
+  &:nth-child(4n + 2) {
+    animation-delay: $data-show-time;
+  }
+  &:nth-child(4n + 3) {
+    animation-delay: $data-show-time * 2;
+  }
+  &:nth-child(4n) {
+    animation-delay: $data-show-time * 3;
+  }
+}
+
+@keyframes display-text {
+  0% {
+    max-height: 0;
+  }
+  5% {
+    max-height: 100vh;
+  }
+  16.5% {
+    opacity: 1;
+  }
+  17% {
+    opacity: 0;
+  }
+  17.5% {
+    opacity: 1;
+  }
+  19% {
+    opacity: 0;
+    max-height: 100vh;
+  }
+  20% {
+    max-height: 0;
+  }
+}
+
+.audio-visualizer {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  border-radius: 20px/15px;
+  opacity: .75;
+  text-align: center;
+  font-size: 16px;
+  text-transform: uppercase;
+  mix-blend-mode: lighten;
+  color: #FFF;
+
+  &--hidden {
+    display: none;
+  }
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    filter: drop-shadow(0 0 3px #FFF);
+    border-radius: inherit;
+    border: 2px solid #FFF;
+  }
+}
+
+.audio-visualizer__content {
+  overflow: hidden;
+  border-radius: inherit;
+}
+
+.audio-visualizer__title {
+  position: relative;
+  margin-top: 10px;
+  line-height: 1;
+  text-shadow: 0 0 3px #FFF;
+}
+.audio-visualizer__canvas {
+  display: block;
+  margin-top: -10px;
+  margin-bottom: -5px;
+}
+
