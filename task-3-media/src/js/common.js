@@ -179,6 +179,8 @@
   // ------------------------------
 
   function checkSoundLevel (dataArrayAlt) {
+    const visualizer = document.querySelector('.audio-visualizer');
+    const visualizerLoudWarningClass = 'audio-visualizer--loud-warning';
     const audioWarning = document.querySelector('.audio-visualizer__warning');
     const content = document.querySelector('.content');
     const contentLoudWarningClass = 'content--loud-warning';
@@ -191,9 +193,11 @@
     if (firstColumnsSum > 500) {
       audioWarning.innerHTML = 'Too loud';
       content.classList.add(contentLoudWarningClass);
+      visualizer.classList.add(visualizerLoudWarningClass);
     } else {
       audioWarning.innerHTML = 'Normal';
       content.classList.remove(contentLoudWarningClass);
+      visualizer.classList.remove(visualizerLoudWarningClass);
     }
   }
 

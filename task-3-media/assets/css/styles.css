@@ -214,6 +214,8 @@ BODY {
     border: 2px solid;
     -webkit-filter: drop-shadow(0 0 3px #FFF);
             filter: drop-shadow(0 0 3px #FFF); }
+  .audio-visualizer--loud-warning {
+    opacity: 1; }
 
 .audio-visualizer__container {
   overflow: hidden;

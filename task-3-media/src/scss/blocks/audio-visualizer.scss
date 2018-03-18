@@ -19,6 +19,10 @@
     border: 2px solid;
     filter: drop-shadow(0 0 3px #FFF);
   }
+
+  &--loud-warning {
+    opacity: 1;
+  }
 }
 
 .audio-visualizer__container {
