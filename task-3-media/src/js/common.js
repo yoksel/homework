@@ -26,7 +26,6 @@
         });
 
         addSoundVolume(mediaStream);
-        addVideoToCanvas(video, mediaStream);
         checkMove(video, mediaStream);
         addData(video);
 
@@ -36,34 +35,6 @@
       .catch(function(err) {
         console.log('Error: ', err.name + ": " + err.message);
       });
-  }
-
-  //------------------------------
-
-  function addVideoToCanvas(video, mediaStream) {
-    let prevPixels = '';
-
-    const canvas = document.querySelector('#video-canvas');
-    const context = canvas.getContext('2d', { alpha: false });
-
-    video.addEventListener('loadedmetadata', function() {
-      canvas.width = video.videoWidth;
-      canvas.height = video.videoHeight;
-    });
-
-    video.addEventListener('play', function() {
-      draw(video, context);
-    }, 0);
-
-    function draw(video, context) {
-      if (!video.paused && !video.ended) {
-        context.drawImage(video, 0, 0);
-
-        requestAnimationFrame(() => {
-          draw(video, context);
-        });
-      }
-    }
   }
 
   //------------------------------
