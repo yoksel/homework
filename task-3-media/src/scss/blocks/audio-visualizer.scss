@@ -2,6 +2,7 @@
   position: relative;
   width: 200px;
   border: none;
+  mix-blend-mode: lighten;
 
   &--hidden {
     display: none;
@@ -20,6 +21,11 @@
   }
 }
 
+.audio-visualizer__container {
+  overflow: hidden;
+  border-radius: inherit;
+}
+
 .audio-visualizer__title {
   position: relative;
   margin-top: 10px;
@@ -28,11 +34,11 @@
   text-shadow: 0 0 5px white;
 }
 
-.audio-visualizer__container {
-  overflow: hidden;
-  border-radius: inherit;
-}
-
 .audio-visualizer__canvas {
   display: block;
+}
+
+.audio-visualizer__warning {
+  padding: 3px 0;
+  border-top: 2px solid;
 }

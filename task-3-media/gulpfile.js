@@ -25,7 +25,7 @@ gulp.task('js', () => {
   .pipe(babel())
   .pipe(sourcemaps.write('.',{
     includeContent: false,
-    sourceRoot: '../assets/js'
+    sourceRoot: '../assets/js/'
   }))
   .pipe(gulp.dest('./assets/js'));
 });

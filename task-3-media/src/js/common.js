@@ -86,7 +86,6 @@
           })
         },
         500);
-
       }
     }
   }
@@ -113,7 +112,7 @@
     var audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     var source;
 
-    //set up the different audio nodes we will use for the app
+    //Set up the different audio nodes we will use for the app
     var analyser = audioCtx.createAnalyser();
     analyser.minDecibels = -90;
     analyser.maxDecibels = -10;
@@ -155,11 +154,13 @@
       canvasCtx.clearRect(0, 0, width, height);
 
       var drawAlt = function() {
+        checkSoundLevel(dataArrayAlt);
+
         drawVisual = requestAnimationFrame(drawAlt);
 
         analyser.getByteFrequencyData(dataArrayAlt);
 
-        canvasCtx.fillStyle = 'hsl(0, 0, 0)';
+        canvasCtx.fillStyle = 'hsl(0, 0%, 0%)';
         canvasCtx.fillRect(0, 0, width, height);
 
         var barWidth = (width / bufferLengthAlt);
@@ -169,7 +170,7 @@
         for(var i = 0; i < bufferLengthAlt; i++) {
           barHeight = dataArrayAlt[i];
 
-          canvasCtx.fillStyle = 'hsl(0, 0%,' + barHeight + '%)';
+          canvasCtx.fillStyle = 'hsla(0, 0%,' + barHeight + '%, 1)';
           canvasCtx.fillRect(x, height - barHeight/2, barWidth, barHeight/2);
 
           x += barWidth + 3;
@@ -177,6 +178,25 @@
       };
 
       drawAlt();
+    }
+  }
+
+  //------------------------------
+
+  function checkSoundLevel(dataArrayAlt) {
+    const audioWarning = document.querySelector('.audio-visualizer__warning');
+    const audioWarningHiddenClass = 'audio-visualizer__warning--hidden';
+
+    const firstColumns = dataArrayAlt.slice(0,10);
+    const firstColumnsSum = firstColumns.reduce((prev, item) => {
+      return prev + item;
+    }, 0);
+
+    if (firstColumnsSum > 500) {
+      audioWarning.innerHTML = 'Too loud';
+    }
+    else {
+      audioWarning.innerHTML = 'Normal';
     }
   }
 

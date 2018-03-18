@@ -76,7 +76,6 @@ BODY {
   border-radius: 20px/15px;
   border: 2px solid;
   opacity: .75;
-  mix-blend-mode: lighten;
   text-align: center;
   font-size: 16px;
   letter-spacing: 1px;
@@ -197,7 +196,8 @@ BODY {
 .audio-visualizer {
   position: relative;
   width: 200px;
-  border: none; }
+  border: none;
+  mix-blend-mode: lighten; }
   .audio-visualizer--hidden {
     display: none; }
   .audio-visualizer::before {
@@ -212,6 +212,10 @@ BODY {
     -webkit-filter: drop-shadow(0 0 3px #FFF);
             filter: drop-shadow(0 0 3px #FFF); }
 
+.audio-visualizer__container {
+  overflow: hidden;
+  border-radius: inherit; }
+
 .audio-visualizer__title {
   position: relative;
   margin-top: 10px;
@@ -219,12 +223,12 @@ BODY {
   line-height: 1;
   text-shadow: 0 0 5px white; }
 
-.audio-visualizer__container {
-  overflow: hidden;
-  border-radius: inherit; }
-
 .audio-visualizer__canvas {
   display: block; }
+
+.audio-visualizer__warning {
+  padding: 3px 0;
+  border-top: 2px solid; }
 
 .move-detection {
   padding: 10px;
