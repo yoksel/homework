@@ -46,11 +46,14 @@ BODY {
   position: relative;
   width: 800px;
   height: 600px;
-  flex-shrink: 0; }
+  flex-shrink: 0;
+  transition: background .5s; }
   .content--video-playing {
     background: crimson; }
   .content--has-filter {
     background: #777; }
+  .content--loud-warning {
+    background: teal; }
 
 .video {
   width: 100%;

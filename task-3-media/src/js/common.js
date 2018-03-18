@@ -185,7 +185,8 @@
 
   function checkSoundLevel(dataArrayAlt) {
     const audioWarning = document.querySelector('.audio-visualizer__warning');
-    const audioWarningHiddenClass = 'audio-visualizer__warning--hidden';
+    const content = document.querySelector('.content');
+    const contentLoudWarningClass = 'content--loud-warning';
 
     const firstColumns = dataArrayAlt.slice(0,10);
     const firstColumnsSum = firstColumns.reduce((prev, item) => {
@@ -194,9 +195,11 @@
 
     if (firstColumnsSum > 500) {
       audioWarning.innerHTML = 'Too loud';
+      content.classList.add(contentLoudWarningClass);
     }
     else {
       audioWarning.innerHTML = 'Normal';
+      content.classList.remove(contentLoudWarningClass);
     }
   }
 

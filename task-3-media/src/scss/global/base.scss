@@ -57,6 +57,7 @@ BODY {
   width: 800px;
   height: 600px;
   flex-shrink: 0;
+  transition: background .5s;
 
   &--video-playing {
     background: crimson;
@@ -64,6 +65,10 @@ BODY {
 
   &--has-filter {
     background: #777;
+  }
+
+  &--loud-warning {
+    background: teal;
   }
 }
 
