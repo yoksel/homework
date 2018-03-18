@@ -1,0 +1,15 @@
+.column {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  padding: $side-offset;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex-wrap: wrap;
+
+   &--right {
+     right: 0;
+     align-items: center;
+   }
+}

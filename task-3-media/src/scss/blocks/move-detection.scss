@@ -1,9 +1,6 @@
 .move-detection {
-  position: absolute;
-  right: 20px;
-  bottom: 20px;
   padding: 10px;
-  opacity: .1;
+  opacity: 0;
 
   &--hidden {
     display: none;

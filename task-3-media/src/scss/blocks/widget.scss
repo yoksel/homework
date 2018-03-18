@@ -1,10 +1,11 @@
 .widget {
   border-radius: 20px/15px;
-  opacity: .5;
-  mix-blend-mode: lighten;
   border: 2px solid;
+  opacity: .75;
+  mix-blend-mode: lighten;
   text-align: center;
   font-size: 16px;
+  letter-spacing: 1px;
   text-transform: uppercase;
   color: #FFF;
 }

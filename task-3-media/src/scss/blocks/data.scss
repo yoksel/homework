@@ -1,5 +1,5 @@
 .data {
-  font-size: 10px;
+  width: 150px;
   letter-spacing: 1px;
   text-transform: uppercase;
   text-shadow: 0 0 5px white;
@@ -13,7 +13,7 @@
 .data__list {
   position: relative;
   margin: 0;
-  padding: 20px 0 0 20px;
+  padding: 0;
   list-style-type: none;
 }
 

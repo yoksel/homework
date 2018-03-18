@@ -8,8 +8,8 @@
     navigator.mediaDevices.getUserMedia({
       audio: true,
       video: {
-        width: { min: 300, ideal: 800 },
-        height: { min: 200, ideal: 600 }
+          width: {min: 320, ideal: 800},
+          height: {min: 240, ideal: 600}
         }
       })
       .then(function(mediaStream) {
@@ -22,14 +22,13 @@
         video.addEventListener('loadedmetadata',function(e) {
           video.play();
           content.classList.add('content--video-playing');
+          animateFilter();
         });
 
         addSoundVolume(mediaStream);
         addVideoToCanvas(video, mediaStream);
         checkMove(video, mediaStream);
-
         addData(video);
-        animateFilter();
 
         // Bad performance
         // addVideoToCanvasWebGL(mediaStream);
@@ -76,6 +75,7 @@
     const canvas = document.querySelector('.move-detection__detector');
     const context = canvas.getContext('2d', { alpha: false });
     const moveDetectedClass = 'move-detection--detected';
+    let isAnalisysAdded = false;
 
     video.addEventListener('play', () => {
       moveDetectionElem.classList.remove('move-detection--hidden');
@@ -89,6 +89,12 @@
 
         const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
         let newPixels = imageData.data;
+
+        // If pic already exist && analysis not added yet
+        if (prevPixels && !isAnalisysAdded) {
+          addAnalisys(newPixels);
+          isAnalisysAdded = true;
+        }
 
         if (prevPixels) {
           const snapIsSame = checkPixelsDiff(prevPixels, newPixels);
@@ -118,7 +124,7 @@
 
   function checkPixelsDiff(prevPixels, newPixels) {
     let snapIsSame = true;
-    const threshold = 20;
+    const threshold = 15;
 
     for (var i = 0; i < prevPixels.length; i += 500) {
       if (Math.abs(prevPixels[i] - newPixels[i]) > threshold ){
@@ -171,7 +177,7 @@
       const width = canvas.width;
       const height = canvas.height;
 
-      analyser.fftSize = 256;
+      analyser.fftSize = 128; //256
       var bufferLengthAlt = analyser.frequencyBinCount;
       var dataArrayAlt = new Uint8Array(bufferLengthAlt);
 
@@ -185,7 +191,7 @@
         canvasCtx.fillStyle = 'hsl(0, 0, 0)';
         canvasCtx.fillRect(0, 0, width, height);
 
-        var barWidth = (width / bufferLengthAlt) * 2.5;
+        var barWidth = (width / bufferLengthAlt);
         var barHeight;
         var x = 0;
 
@@ -193,10 +199,9 @@
           barHeight = dataArrayAlt[i];
 
           canvasCtx.fillStyle = 'hsl(0, 0%,' + barHeight + '%)';
-          // console.log('barHeight', barHeight);
-          canvasCtx.fillRect(x,height-barHeight/2,barWidth,barHeight/2);
+          canvasCtx.fillRect(x, height - barHeight/2, barWidth, barHeight/2);
 
-          x += barWidth + 1;
+          x += barWidth + 3;
         }
       };
 
@@ -208,7 +213,7 @@
 
   function addData(video) {
     const chanksCount = 4;
-    const chankLength = 45;
+    const chankLength = 25;
     const min = 120;
     const max = min + chankLength * chanksCount;
     let chankItemsCounter = min;
@@ -229,7 +234,7 @@
       let sectionLength = 0;
       const spaceSize = 3;
       const randChanksSections = [
-        Math.round(Math.random() * 8) + 5,
+        Math.round(Math.random() * 6) + 5,
         Math.round(Math.random() * 4) + 6
       ];
       let currentSection = 0;
@@ -244,7 +249,7 @@
 
       for(var k = 0; k < currentChankLength; k++ ) {
         if (sectionLength > currentSectionLength && sectionLength <= currentSectionLength + spaceSize) {
-            dataItem.innerHTML += k + '<br/>';
+            dataItem.innerHTML += chankItemsCounter + '<br/>';
 
           if (sectionLength === currentSectionLength + spaceSize) {
             currentSection++;
@@ -253,9 +258,8 @@
           }
         }
         else {
-
           let contentList = [
-            chankItemsCounter,
+            `${chankItemsCounter}`,
             (chankItemsCounter * 50).toString(16)
           ];
 
@@ -266,7 +270,7 @@
             contentList.push((chankItemsCounter - 40 + m).toString(16));
           }
 
-          dataItem.innerHTML += content = contentList.join('\t') + '<br/>';
+          dataItem.innerHTML += contentList.join('\t') + '<br>';
         }
         sectionLength++;
         chankItemsCounter++;
@@ -278,6 +282,40 @@
 
   //------------------------------
 
+  function addAnalisys(pixels) {
+    const chanksCount = 4;
+    const chankLength = 40;
+    const min = 120;
+    const max = min + chankLength * chanksCount;
+    let chankItemsCounter = min;
+
+    const dataElem = document.querySelector('.analysis');
+    const dataContentElem = document.querySelector('.analysis__content');
+    dataElem.classList.remove('analysis--hidden');
+
+    const pixelsSrcData = pixels.slice(0, 200);
+    let pixelsData = [];
+
+    pixelsSrcData.forEach(item => {
+      if (item >= 8 && item !== 255) {
+        pixelsData.push(item.toString(2).substr(0,4));
+      }
+    });
+
+    dataContentElem.innerHTML = pixelsData.join(' ');
+
+    toggleVisibility();
+
+    function toggleVisibility() {
+      dataElem.classList.toggle('analysis--hidden');
+      const delay = Math.random() * 5000 + 4000;
+
+      setTimeout(toggleVisibility, delay);
+    }
+  }
+
+  //------------------------------
+
   function animateFilter() {
     const feMap = document.getElementById('feMap');
     const feOffset = document.getElementById('feOffset');
@@ -285,9 +323,10 @@
     const contentHasFilterClass = 'content--has-filter';
     let classWasAdded = false;
     let currentVal = 0;
-    const maxVal = 100;
     let currentOffset = 0;
-    const step = 5;
+    const maxVal = 240;
+    const steps = 3;
+    const step = maxVal / steps;
     let direction = 'up';
 
     animate();
@@ -319,7 +358,7 @@
           setVal();
         }
         else {
-          const randDelay = Math.round(Math.random() * 3) + 5;
+          const randDelay = Math.round(Math.random() * 3) + 2;
           feMap.setAttribute('scale', 0);
 
           setTimeout(function() {
@@ -339,8 +378,8 @@
       }
 
       feMap.setAttribute('scale', newVal);
-      feOffset.setAttribute('x', -currentOffset);
-      feOffset.setAttribute('y', -currentOffset);
+      feOffset.setAttribute('dx', -currentOffset);
+      feOffset.setAttribute('dy', -currentOffset);
 
       requestAnimationFrame(animate);
     }

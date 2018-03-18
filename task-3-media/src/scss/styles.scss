@@ -1,8 +1,10 @@
 @import 'global/vars';
 @import 'global/base';
 
-@import 'blocks/data';
+@import 'blocks/column';
 @import 'blocks/widget';
+
+@import 'blocks/data';
+@import 'blocks/analysis';
 @import 'blocks/audio-visualizer';
-@import 'blocks/radar';
 @import 'blocks/move-detection';

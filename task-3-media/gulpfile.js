@@ -23,7 +23,10 @@ gulp.task('js', () => {
   .pipe(sourcemaps.init())
   .pipe(concat('common.js'))
   .pipe(babel())
-  .pipe(sourcemaps.write())
+  .pipe(sourcemaps.write('.',{
+    includeContent: false,
+    sourceRoot: '../assets/js'
+  }))
   .pipe(gulp.dest('./assets/js'));
 });
 
@@ -34,8 +37,11 @@ gulp.task('style', () => {
     .pipe(plumber())
     .pipe(sourcemaps.init())
     .pipe(sass().on('error', sass.logError))
-    .pipe(sourcemaps.write())
     .pipe(postcss([ autoprefixer() ]))
+    .pipe(sourcemaps.write('.', {
+      includeContent: false,
+      sourceRoot: '../assets/css/'
+    }))
     .pipe(gulp.dest('./assets/css'));
 });
 

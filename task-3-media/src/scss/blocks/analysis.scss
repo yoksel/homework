@@ -1,0 +1,50 @@
+
+.analysis {
+  opacity: .75;
+  text-shadow: 0 0 5px white;
+  transition: opacity 1s;
+
+  &--hidden {
+    opacity: 0;
+  }
+}
+
+.analysis__title {
+  text-align: center;
+  line-height: 1;
+
+  &::after {
+    content: "====================";
+    display: block;
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+}
+
+$analysis-font-size: 16px;
+$container-step: ($analysis-font-size * $base-line-height);
+$container-lines: 10;
+$container-height: $container-step * $container-lines;
+$moveContentOffset: $container-step * $container-lines - 4px;
+
+.analysis__container {
+  max-width: 180px;
+  height: $container-height;
+  overflow: hidden;
+  font-size: $analysis-font-size;
+}
+
+.analysis__content {
+  animation: moveContent 2s infinite steps($container-lines);
+
+  .analysis--hidden & {
+    animation-play-state: paused;
+  }
+}
+
+@keyframes moveContent {
+  to {
+    transform: translateY(-$moveContentOffset);
+  }
+}
