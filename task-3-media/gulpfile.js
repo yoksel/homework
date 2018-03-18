@@ -20,10 +20,10 @@ gulp.task('js', () => {
     'src/**/addVideoToCanvasWebGL.js',
     'src/**/common.js'
   ])
-  .pipe(sourcemaps.init())
   .pipe(concat('common.js'))
+  .pipe(sourcemaps.init())
   .pipe(babel())
-  .pipe(sourcemaps.write('.',{
+  .pipe(sourcemaps.write('.', {
     includeContent: false,
     sourceRoot: '../assets/js/'
   }))
