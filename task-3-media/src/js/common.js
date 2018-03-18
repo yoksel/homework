@@ -13,10 +13,26 @@
         }
       })
       .then(function(mediaStream) {
+        const video = document.querySelector('.video');
+        const content = document.querySelector('.content');
+
+        video.srcObject = mediaStream;
+        let prevPixels = '';
+
+        video.addEventListener('loadedmetadata',function(e) {
+          video.play();
+          content.classList.add('content--video-playing');
+        });
+
         addSoundVolume(mediaStream);
-        addVideoToCanvas(mediaStream)
+        addVideoToCanvas(video, mediaStream);
+        checkMove(video, mediaStream);
 
+        addData(video);
+        animateFilter();
 
+        // Bad performance
+        // addVideoToCanvasWebGL(mediaStream);
       })
       .catch(function(err) {
         console.log('Error: ', err.name + ": " + err.message);
@@ -25,42 +41,27 @@
 
   //------------------------------
 
-  function addVideoToCanvas(mediaStream) {
-    const video = document.querySelector('.video');
-    video.srcObject = mediaStream;
+  function addVideoToCanvas(video, mediaStream) {
+    let prevPixels = '';
 
-    video.onloadedmetadata = function(e) {
-      video.play();
-    };
-
-    canvasList = document.querySelectorAll('.canvas');
-    canvasList.map = [].map;
-
-    const contextList = canvasList.map(item => {
-      return item.getContext('2d', { alpha: false });
-    });
+    const canvas = document.querySelector('#video-canvas');
+    const context = canvas.getContext('2d', { alpha: false });
 
     video.addEventListener('loadedmetadata', function() {
-      canvasList.forEach(item => {
-        item.width = video.videoWidth;
-        item.height = video.videoHeight;
-      })
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
     });
 
     video.addEventListener('play', function() {
-      const that = this;
-
-      contextList.forEach((item, i ) => {
-        draw(video, item, i);
-      })
+      draw(video, context);
     }, 0);
 
-    function draw(video, context, itemNum) {
+    function draw(video, context) {
       if (!video.paused && !video.ended) {
         context.drawImage(video, 0, 0);
 
         requestAnimationFrame(() => {
-          draw(video, context, itemNum);
+          draw(video, context);
         });
       }
     }
@@ -68,11 +69,72 @@
 
   //------------------------------
 
+  function checkMove(video, mediaStream) {
+    let prevPixels = '';
+
+    const moveDetectionElem = document.querySelector('.move-detection');
+    const canvas = document.querySelector('.move-detection__detector');
+    const context = canvas.getContext('2d', { alpha: false });
+    const moveDetectedClass = 'move-detection--detected';
+
+    video.addEventListener('play', () => {
+      moveDetectionElem.classList.remove('move-detection--hidden');
+      draw(video, context);
+    }, 0);
+
+    function draw(video, context) {
+
+      if (!video.paused && !video.ended) {
+        context.drawImage(video, 0, 0, canvas.clientWidth, canvas.clientHeight);
+
+        const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+        let newPixels = imageData.data;
+
+        if (prevPixels) {
+          const snapIsSame = checkPixelsDiff(prevPixels, newPixels);
+
+          if (snapIsSame === false) {
+            moveDetectionElem.classList.add(moveDetectedClass);
+          }
+          else {
+            moveDetectionElem.classList.remove(moveDetectedClass);
+          }
+        }
+
+        prevPixels = newPixels;
+
+        setTimeout(() => {
+          requestAnimationFrame(() => {
+            draw(video, context);
+          })
+        },
+        500);
+
+      }
+    }
+  }
+
+  //------------------------------
+
+  function checkPixelsDiff(prevPixels, newPixels) {
+    let snapIsSame = true;
+    const threshold = 20;
+
+    for (var i = 0; i < prevPixels.length; i += 500) {
+      if (Math.abs(prevPixels[i] - newPixels[i]) > threshold ){
+        return false;
+      }
+    }
+
+    return snapIsSame;
+  }
+
+  //------------------------------
+
   // Source: https://github.com/mdn/voice-change-o-matic
-  function addSoundVolume(stream) {
+  function addSoundVolume(mediaStream) {
     var audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     var source;
-    var stream;
 
     //set up the different audio nodes we will use for the app
     var analyser = audioCtx.createAnalyser();
@@ -90,7 +152,7 @@
     var canvasCtx = canvas.getContext("2d");
 
     if (navigator.mediaDevices.getUserMedia) {
-      source = audioCtx.createMediaStreamSource(stream);
+      source = audioCtx.createMediaStreamSource(mediaStream);
       source.connect(analyser);
       analyser.connect(distortion);
       distortion.connect(biquadFilter);
@@ -109,64 +171,55 @@
       const width = canvas.width;
       const height = canvas.height;
 
-      analyser.fftSize = 1024;
-      var bufferLength = analyser.fftSize;
-      var dataArray = new Uint8Array(bufferLength);
+      analyser.fftSize = 256;
+      var bufferLengthAlt = analyser.frequencyBinCount;
+      var dataArrayAlt = new Uint8Array(bufferLengthAlt);
 
       canvasCtx.clearRect(0, 0, width, height);
 
-      var draw = function() {
-        drawVisual = requestAnimationFrame(draw);
-        analyser.getByteTimeDomainData(dataArray);
+      var drawAlt = function() {
+        drawVisual = requestAnimationFrame(drawAlt);
 
-        canvasCtx.fillStyle = '#000';
+        analyser.getByteFrequencyData(dataArrayAlt);
+
+        canvasCtx.fillStyle = 'hsl(0, 0, 0)';
         canvasCtx.fillRect(0, 0, width, height);
 
-        canvasCtx.lineWidth = 3;
-        canvasCtx.strokeStyle = '#FFF';
-
-        canvasCtx.beginPath();
-
-        var sliceWidth = width * 1.0 / bufferLength;
+        var barWidth = (width / bufferLengthAlt) * 2.5;
+        var barHeight;
         var x = 0;
 
-        for(var i = 0; i < bufferLength; i++) {
+        for(var i = 0; i < bufferLengthAlt; i++) {
+          barHeight = dataArrayAlt[i];
 
-          var v = dataArray[i] / 128.0;
-          var y = v * height/2;
+          canvasCtx.fillStyle = 'hsl(0, 0%,' + barHeight + '%)';
+          // console.log('barHeight', barHeight);
+          canvasCtx.fillRect(x,height-barHeight/2,barWidth,barHeight/2);
 
-          if(i === 0) {
-            canvasCtx.moveTo(x, y);
-          } else {
-            canvasCtx.lineTo(x, y);
-          }
-
-          x += sliceWidth;
+          x += barWidth + 1;
         }
-
-        canvasCtx.lineTo(canvas.width, canvas.height/2);
-        canvasCtx.stroke();
       };
 
-      draw();
+      drawAlt();
     }
   }
 
   //------------------------------
 
-  function addData() {
+  function addData(video) {
     const chanksCount = 4;
     const chankLength = 40;
     const min = 120;
     const max = min + chankLength * chanksCount;
     let chankItemsCounter = min;
 
-    // console.log(randChanksSections);
-
     const dataElem = document.querySelector('.data');
     const dataList = document.createElement('ul');
     dataList.classList.add('data__list');
 
+    video.addEventListener('play', function() {
+      dataElem.classList.remove('data--hidden');
+    }, 0);
 
     for(var i = 0; i < chanksCount; i++ ) {
       const dataItem = document.createElement('li');
@@ -213,9 +266,14 @@
   //------------------------------
 
   function animateFilter() {
-    var feMap = document.getElementById('feMap');
+    const feMap = document.getElementById('feMap');
+    const feOffset = document.getElementById('feOffset');
+    const content = document.querySelector('.content');
+    const contentHasFilterClass = 'content--has-filter';
+    let classWasAdded = false;
     let currentVal = 0;
-    const maxVal = 160;
+    const maxVal = 100;
+    let currentOffset = 0;
     const step = 5;
     let direction = 'up';
 
@@ -226,10 +284,20 @@
         if (currentVal < maxVal) {
           currentVal += step;
           setVal();
+
+          if (!classWasAdded) {
+            content.classList.add(contentHasFilterClass);
+            classWasAdded = true;
+          }
         }
         else {
           direction = 'down';
           setVal();
+
+          if (classWasAdded) {
+            content.classList.remove(contentHasFilterClass);
+            classWasAdded = false;
+          }
         }
       }
       else {
@@ -238,7 +306,8 @@
           setVal();
         }
         else {
-          const randDelay = Math.round(Math.random() * 3) + 10;
+          const randDelay = Math.round(Math.random() * 3) + 5;
+          feMap.setAttribute('scale', 0);
 
           setTimeout(function() {
             animate();
@@ -246,24 +315,26 @@
           }, randDelay * 1000)
         }
       }
+    }
 
-      function setVal() {
-        let newVal = currentVal;
-        if (currentVal % 2) {
-          newVal = -newVal;
-        }
+    function setVal() {
+      let newVal = currentVal;
+      currentOffset = currentVal / 2.5;
 
-        feMap.setAttribute('scale', newVal);
-
-        requestAnimationFrame(animate);
+      if (currentVal % 2) {
+        newVal = -newVal;
       }
+
+      feMap.setAttribute('scale', newVal);
+      feOffset.setAttribute('x', -currentOffset);
+      feOffset.setAttribute('y', -currentOffset);
+
+      requestAnimationFrame(animate);
     }
   }
 
   //------------------------------
 
   getStream();
-  addData();
-  animateFilter();
 
 })();

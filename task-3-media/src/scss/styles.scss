@@ -1,3 +1,8 @@
 @import 'global/vars';
 @import 'global/base';
-@import 'global/fonts';
+
+@import 'blocks/data';
+@import 'blocks/widget';
+@import 'blocks/audio-visualizer';
+@import 'blocks/radar';
+@import 'blocks/move-detection';

@@ -1,0 +1,22 @@
+.move-detection {
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+  padding: 10px;
+  opacity: .1;
+
+  &--hidden {
+    display: none;
+  }
+
+  &--detected {
+    filter: drop-shadow(0 0 3px #FFF);
+    opacity: 1;
+  }
+}
+
+.move-detection__detector {
+  position: absolute;
+  pointer-events: none;
+  opacity: 0;
+}
