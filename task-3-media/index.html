@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ru">
   <head>
-    <title>Йа титрадко</title>
+    <title>Hello, humans 👀</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="noindex">
     <link href="https://fonts.googleapis.com/css?family=Play:400,700&amp;subset=cyrillic-ext" rel="stylesheet">
@@ -10,32 +10,50 @@
 <body class="page">
 
   <svg class="hidden-svg">
-    <filter id="distortion" filterUnits="userSpaceOnUse" x="-100" y="-100"
-              width="1200" height="1200">
-        <feTurbulence result="turb" baseFrequency="0 .04"
-          numOctaves="1" seed="100" />
-        <feDisplacementMap id="feMap" in="SourceGraphic" in2="turb" scale="0"/>
-        <!-- <feOffset in2="turb" dx="-50" dy="-50"/> -->
-      </filter>
+    <filter
+      id="distortion"
+      filterUnits="userSpaceOnUse"
+      x="-100"
+      y="-100"
+      width="1200"
+      height="1000"
+    >
+      <feTurbulence result="turb" baseFrequency="0 .04"
+        numOctaves="1" seed="100" />
+      <feDisplacementMap id="feMap" in="SourceGraphic" in2="turb" scale="0"/>
+      <feOffset id="feOffset" in2="turb" dx="0" dy="0"/>
+    </filter>
   </svg>
 
   <div class="screen">
     <div class="content" style="filter: url(#distortion);">
       <video class="video"></video>
-      <!-- <audio class="audio"></audio> -->
-      <div class="canvas-group">
-        <canvas class="canvas canvas--bottom"></canvas>
-        <canvas class="canvas canvas--top"></canvas>
+
+      <canvas
+        id="video-canvas"
+        class="video-canvas"
+        width="800" height="600"
+      ></canvas>
+
+      <div class="audio-visualizer audio-visualizer--hidden widget">
+        <div class="audio-visualizer__title">Audio waveform</div>
+        <canvas
+          class="audio-visualizer__canvas"
+          width="200"
+          height="50"
+        ></canvas>
       </div>
 
-      <div class="audio-visualizer audio-visualizer--hidden">
-        <div class="audio-visualizer__content">
-          <div class="audio-visualizer__title">Audio waveform</div>
-          <canvas class="audio-visualizer__canvas" width="200" height="60"></canvas>
-        </div>
+      <div class="move-detection move-detection--hidden widget">
+        <canvas
+          class="move-detection__detector"
+          width="100" height="75"
+        ></canvas>
+
+        <div class="move-detection__title">Move detected!</div>
       </div>
-      <div class="data"></div>
-      <div class="noise"></div>
+
+      <div class="data data--hidden"></div>
     </div>
   </div>
 

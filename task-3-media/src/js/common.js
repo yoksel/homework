@@ -208,7 +208,7 @@
 
   function addData(video) {
     const chanksCount = 4;
-    const chankLength = 40;
+    const chankLength = 45;
     const min = 120;
     const max = min + chankLength * chanksCount;
     let chankItemsCounter = min;
@@ -227,31 +227,44 @@
       dataItem.innerHTML = '';
       dataList.appendChild(dataItem);
       let sectionLength = 0;
+      const spaceSize = 3;
       const randChanksSections = [
-        Math.round(Math.random() * 6) + 5,
-        Math.round(Math.random() * 5) + 3
+        Math.round(Math.random() * 8) + 5,
+        Math.round(Math.random() * 4) + 6
       ];
       let currentSection = 0;
       let currentSectionLength = randChanksSections[currentSection];
       let currentChankLength = Math.round(Math.random() * chankLength / 2) + chankLength / 2;
+      const chanksSum = randChanksSections[0] + randChanksSections[1] + spaceSize * 2;
+
+      // Cut empty tails
+      if (currentChankLength - spaceSize <= chanksSum) {
+        currentChankLength = chanksSum - spaceSize;
+      }
 
       for(var k = 0; k < currentChankLength; k++ ) {
-        if (sectionLength > currentSectionLength && sectionLength <= currentSectionLength + 3) {
-            dataItem.innerHTML += chankItemsCounter + '<br/>';
+        if (sectionLength > currentSectionLength && sectionLength <= currentSectionLength + spaceSize) {
+            dataItem.innerHTML += k + '<br/>';
 
-            if (sectionLength == currentSectionLength + 3) {
-              currentSection++;
-              currentSectionLength = randChanksSections[currentSection] + k;
-              sectionLength = 0;
-            }
+          if (sectionLength === currentSectionLength + spaceSize) {
+            currentSection++;
+            currentSectionLength = randChanksSections[currentSection];
+            sectionLength = 0;
+          }
         }
         else {
+
           let contentList = [
             chankItemsCounter,
-            (chankItemsCounter * 50).toString(16),
-            (chankItemsCounter - 40).toString(16),
-            (chankItemsCounter - 30).toString(16),
+            (chankItemsCounter * 50).toString(16)
           ];
+
+          // Add random short tails
+          const randSetLength = Math.round(Math.random() * 2) + 1;
+
+          for (var m = 0; m < randSetLength; m++) {
+            contentList.push((chankItemsCounter - 40 + m).toString(16));
+          }
 
           dataItem.innerHTML += content = contentList.join('\t') + '<br/>';
         }

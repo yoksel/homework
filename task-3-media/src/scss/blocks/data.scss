@@ -25,7 +25,7 @@ $data-duration: $data-steps * $data-show-time;
   position: absolute;
   overflow: hidden;
   max-height: 0;
-  opacity: .5;
+  opacity: .75;
   white-space: pre;
   animation: display-text $data-duration linear infinite;
 
@@ -48,7 +48,7 @@ $data-duration: $data-steps * $data-show-time;
     max-height: 100vh;
   }
   16% {
-    opacity: .5;
+    opacity: .75;
   }
   16.5% {
     opacity: 1;

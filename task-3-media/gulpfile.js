@@ -17,7 +17,7 @@ const ghPages = require('gulp-gh-pages');
 // ------------------------------
 gulp.task('js', () => {
   gulp.src([
-    'src/**/data.js',
+    'src/**/addVideoToCanvasWebGL.js',
     'src/**/common.js'
   ])
   .pipe(sourcemaps.init())
